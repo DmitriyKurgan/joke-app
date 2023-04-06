@@ -12,7 +12,6 @@ export type JokeType = {
     id: number
 };
 
-
 const Joke: FC<{ joke: JokeType }> = ({joke}) => {
     const [getJokeTrigger, {data = {} as JokeType, isFetching}] = useLazyRefreshJokeQuery();
     const {type, setup, punchline, id} = joke;
@@ -49,26 +48,35 @@ const Joke: FC<{ joke: JokeType }> = ({joke}) => {
                 background: 'grey',
                 position: 'relative',
                 borderRadius: '20px',
-                width: '250px',
-                height: '250px'
+                width: '280px',
+                height: '280px'
             }}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >
-            <CardContent>
-                <Typography style={inlineCaptionStyles}>
-                    Type:<Typography style={highlightedTextStyles}>{type}</Typography>
+            <CardContent style={{
+                display: 'grid',
+                gridTemplateAreas: `
+                "t Id"
+                "s s"
+                "p p"
+                "l l"
+               
+                `,
+                gridTemplateRows: '40px 90px 90px 60px',
+                gridTemplateColumns: '1fr 60px'
+            }}>
+                <Typography style={{...inlineCaptionStyles, gridArea: 't'}}>Type:
+                    <Typography style={highlightedTextStyles}>{` ${type}`}</Typography>
                 </Typography>
-                <Typography style={highlightedTextStyles}>
-                    ID:#{id}
-                </Typography>
-                <Typography style={captionStyles}>
+                <Typography style={{...highlightedTextStyles, gridArea: 'Id'}}>ID:#{id}</Typography>
+                <Typography style={{...captionStyles, gridArea: 's'}}>
                     Setup:<Typography>{setup}</Typography>
                 </Typography>
-                <Typography style={captionStyles}>
+                <Typography style={{...captionStyles, gridArea: 'p'}}>
                     Punchline:<Typography>{punchline}</Typography>
                 </Typography>
-                <Typography align="center" style={{}}>
+                <Typography align="center" style={{gridArea: 'l'}}>
                     {hover && (<>
                             <Button onClick={() => handleDeleteJoke(id)} variant="contained" color="inherit"
                                     style={buttonStyles}>Delete</Button>
@@ -86,6 +94,7 @@ const Joke: FC<{ joke: JokeType }> = ({joke}) => {
 
 export default Joke;
 
+
 const captionStyles = {
     fontWeight: 'bold',
     color: '#fff',
@@ -95,13 +104,14 @@ const captionStyles = {
 const inlineCaptionStyles = {
     display: 'inline',
     color: '#fff',
-    fontSize: '18px'
+    fontSize: '18px',
+    marginBottom: '5px',
 }
 
 const highlightedTextStyles = {
     color: 'blue',
     display: 'inline',
-    fontSize: '18px'
+    fontSize: '18px',
 }
 
 const buttonStyles = {

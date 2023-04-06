@@ -43,9 +43,7 @@ const App = () => {
     return (
         <Container maxWidth="md" style={{display: 'grid', gridGap: '20px'}}>
             {data.length > 0 ? (
-                <JokeList jokes={jokes} onDelete={() => {
-                }} isLoading={false} onLoadMore={() => {
-                }}/>
+                <JokeList jokes={jokes} isLoading={false}/>
             ) : (
                 <Typography
                     variant="body1"

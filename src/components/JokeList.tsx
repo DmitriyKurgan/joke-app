@@ -1,14 +1,11 @@
 import React, {useState} from "react";
 import Joke, {JokeType} from "./Joke";
 import {CircularProgress, Theme} from "@mui/material";
-
 import {createStyles, makeStyles} from "@mui/styles";
 
 interface JokeListProps {
     jokes: JokeType[]
-    onLoadMore: () => void
     isLoading: boolean
-    onDelete: (id: number) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
